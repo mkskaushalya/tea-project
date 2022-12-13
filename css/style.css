@@ -1,0 +1,40 @@
+@import url('root.css');
+@import url('home.css');
+@import url('login.css');
+
+section{
+    padding: var(--main-padding);
+}
+body{
+    background-color: var(--background-color);
+}
+
+
+nav{
+    position: fixed;
+    left: 0;
+    width: calc(100% - 160px);
+    margin: var(--nav-margin);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    border-radius: 30px;
+    background-color: #444;
+    padding: 0 30px;
+}
+nav .right ul{
+    display: flex;
+    column-gap: 2rem;
+
+}
+nav .left{
+    display: flex;
+    font-size: 1.5rem;
+    font-weight: 600;
+    column-gap: 1rem;
+}
+nav .right ul li{
+    font-weight: 600;
+    font-size: 1.5rem;
+}
