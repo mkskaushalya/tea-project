@@ -1,0 +1,27 @@
+.home{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100vh;
+}
+.home .left, .home .right{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+.home .left h1{
+    text-align: center;
+    font-size: 38px;
+    color: #fff;
+
+}
+.home .right img{
+    border-radius: 50px;
+}
+.home .left p{
+    font-size: 20px;
+    padding: 0 100px;
+    text-align: justify;
+}
