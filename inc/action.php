@@ -57,16 +57,16 @@ if(isset($_POST['login'])){
   $title = $_POST['title'];
   $price = $_POST['price'];
 	$description = $_POST['description'];
-  $email = $_POST['email'];
   $quantity = $_POST['quantity'];
 	$type = $_POST['type'];
-  $sell_data = signup($firstname, $lastname, $username, $email, $phone, $password, $conn);
+  $userid = $_SESSION['user_data']['user_id'];
+  $sell_data = sell($title, $price, $description, $quantity, $type, $userid, $conn);
   print_r($sell_data);
   $_SESSION['sell_data'] = $sell_data;
   if($sell_data['sell']){
     header("Location: ../sell.php?item-add-success");
   }else{
-    $_SESSION['msg'] = $ssell_data['msg'];
+    $_SESSION['msg'] = $sell_data['msg'];
     header("Location: ../sell.php?error");
   }
   
