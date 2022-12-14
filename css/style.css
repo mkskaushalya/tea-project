@@ -50,3 +50,56 @@ nav .right ul li{
     border-radius: 20px;
 
 }
+
+.sellitem{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-bottom: 2rem;
+}
+
+
+.sellitem table {
+    border-collapse: collapse;
+    border: 2px solid #ddd;
+  }
+.sellitem table td, .sellitem table th {
+    /* border: 2px solid #aaa; */
+    padding: 8px;
+  }
+  .sellitem table tr:nth-child(even){background-color: #555;}
+  .sellitem table tr:hover {background-color: #aaa; color:#333;}
+  .sellitem table tr:hover td{
+    color: #333;
+  }
+  .sellitem table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #ddd;
+    color: #333;
+  }
+
+  .edit, .delbutton{
+    width: 100px;
+    height: 40px;
+    font-size: 1.3rem;
+    color: #fff;  
+  }
+  .edit{
+    background-color: #cc5;
+  }
+  .delbutton{
+    background-color: #c55;
+  }
+  .edit:hover{
+    background-color: #ee4;
+    color: #fff;    
+    box-shadow: none;
+  }
+  .delbutton:hover{
+    background-color: #e44;
+    color: #ddd;
+    box-shadow: none;
+  }
