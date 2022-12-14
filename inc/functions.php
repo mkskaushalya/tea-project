@@ -131,7 +131,7 @@ function Product($type, $conn){
 
 
 function addItemTable($userid, $conn){
-  $query = "SELECT * FROM product WHERE userid=$userid ORDER BY datetime DESC";
+  $query = "SELECT * FROM product WHERE userid=$userid AND status=1 ORDER BY datetime DESC";
   $query_run = mysqli_query($conn, $query);
   $tbody = "";
   if(mysqli_num_rows($query_run) > 0){
@@ -153,14 +153,38 @@ function addItemTable($userid, $conn){
       }
       $adedtime = strtotime($items['datetime']);
       $tbody .= '<tr>';
-      $tbody .= '<td>'.$id.'</td><td>'.$title.'</td><td>'.$price.'</td><td>'.$description.'</td><td>'.$quantity.'</td><td>'.$productname.'</td><td>'.date("Y-m-d", $adedtime).'</td><td>'.date("H:i:s", $adedtime).'</td><td><form action="inc/action.php" method="post"><button type="submit" class="edit" value="'.$id.'" name="productedit">Edit</button></form></td><td><form action="inc/action.php" method="post"><button class="delbutton" type="submit" value="'.$id.'" name="productdelete">Delete</button></form></td>';
+      $tbody .= '<td>'.$id.'</td><td>'.$title.'</td><td>'.$price.'</td><td>'.$description.'</td><td>'.$quantity.'</td><td>'.$productname.'</td><td>'.date("Y-m-d", $adedtime).'</td><td>'.date("H:i:s", $adedtime).'</td><td><form action="productedit.php" method="post"><button type="submit" class="edit" value="'.$id.'" name="productedit">Edit</button></form></td><td><form action="inc/action.php" method="post" onsubmit="return confirm ('."'Are you sure?'".')"><button class="delbutton" type="submit" value="'.$id.'" name="productdelete">Delete</button></form></td>';
       $tbody .= '</tr>';
   
     }
   return $tbody;
 
   }else{
-    return "<tr><td colspan='9'>No Data.</td></tr>";
+    return "<tr><td colspan='10'>No Data.</td></tr>";
 }
+}
+
+
+function deleteProduct($productid, $conn){
+    $sql = "UPDATE product SET status=0, removeddate=NOW() WHERE id='$productid' LIMIT 1";
+    if ($conn->query($sql) === TRUE) {
+      return true;
+    }
+    else {
+        return "Error: " . $sql . "<br>" . $conn->error;
+        header('Location: '.$_SERVER['HTTP_REFERER']);
+    }
+}
+
+
+function updateProduct($productid, $title, $price, $description, $quantity, $type, $conn){
+  $sql = "UPDATE product SET title='$title', price='$price', description='$description', quantity='$quantity', type='$type' WHERE id='$productid' LIMIT 1";
+  if ($conn->query($sql) === TRUE) {
+    return true;
+  }
+  else {
+      return "Error: " . $sql . "<br>" . $conn->error;
+      header('Location: '.$_SERVER['HTTP_REFERER']);
+  }
 }
 ?>

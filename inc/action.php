@@ -79,4 +79,32 @@ if(isset($_GET['logout'])){
   logout();
 }
 
+if(isset($_POST['productdelete'])){
+  if(deleteProduct($_POST['productdelete'], $conn)){
+    header('Location: '.$_SERVER['HTTP_REFERER']);
+  }else{
+    header('Location: '.$_SERVER['HTTP_REFERER']);
+  }
+  
+}
+
+if(isset($_POST['updateproduct'])){
+  $productid = $_POST['updateproduct'];
+  $title = $_POST['title'];
+  $price = $_POST['price'];
+	$description = $_POST['description'];
+  $quantity = $_POST['quantity'];
+	$type = $_POST['type'];
+  $userid = $_SESSION['user_data']['user_id'];
+  if(updateProduct($productid, $title, $price, $description, $quantity, $type, $conn)){
+    echo updateProduct($productid, $title, $price, $description, $quantity, $type, $conn);
+    header('Location: ../sell.php?update-success');
+  }else{
+    header('Location: ../sell.php?error');
+  }
+  
+}
+
+
+
 ?>
