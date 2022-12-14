@@ -14,6 +14,13 @@ unset($_SESSION['user_data']['msg']);
 unset($_SESSION['msg']);
 
 
+}elseif(isset($_SESSION['sell_data']['msg']) && $_SESSION['sell_data']['msg'] != null){
+?>   
+<p class="errorbar"><?php echo $_SESSION['sell_data']['msg']; ?></p>
+<?php
+unset($_SESSION['sell_data']['msg']);
+
+
 }
 ?>
 
