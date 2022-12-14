@@ -17,6 +17,9 @@
             <?php
             if(isset($_SESSION['user_data'])){
                 ?>
+            <a href="sell.php">
+                <li>Sell</li>
+            </a>
             <a href="profile.php">
                 <li><?php echo $_SESSION['user_data']['firstname'] ?></li>
             </a>
