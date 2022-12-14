@@ -14,12 +14,24 @@
             <a href="#">
                 <li>Contact</li>
             </a>
+            <?php
+            if(isset($_SESSION['user_data'])){
+                ?>
+            <a href="inc/action.php?logout">
+                <li>Logout</li>
+            </a>
+            <?php
+            }else{
+            ?>
             <a href="login.php">
                 <li>Login</li>
             </a>
             <a href="signup.php">
                 <li>Signup</li>
             </a>
+            <?php }
+            ?>
+            
         </ul>
     </div>
 </nav>
