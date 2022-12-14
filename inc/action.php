@@ -50,6 +50,26 @@ if(isset($_POST['login'])){
     header("Location: ../signup.php?error");
   }
   
+}elseif(isset($_POST['sell'])){
+  // echo "sell";
+// ====================signup===============
+
+  $title = $_POST['title'];
+  $price = $_POST['price'];
+	$description = $_POST['description'];
+  $email = $_POST['email'];
+  $quantity = $_POST['quantity'];
+	$type = $_POST['type'];
+  $sell_data = signup($firstname, $lastname, $username, $email, $phone, $password, $conn);
+  print_r($sell_data);
+  $_SESSION['sell_data'] = $sell_data;
+  if($sell_data['sell']){
+    header("Location: ../sell.php?item-add-success");
+  }else{
+    $_SESSION['msg'] = $ssell_data['msg'];
+    header("Location: ../sell.php?error");
+  }
+  
 }else{
 
   // header("Location: ../index.php?page=login&error=wk");
