@@ -67,7 +67,43 @@ function signup($firstname, $lastname, $username, $email, $phone, $password, $co
   return array("firstname" => $firstname, "lastname" => $lastname, "status" => true, "signup" =>  $signup, "msg" => $msg,"username" => $username, "email" => $email, "phone" => $phone);
 }
 
+function productType($conn){
+  
+  $query = "SELECT * FROM producttype";
+  $query_run = mysqli_query($conn, $query);
+  $print_data = "";    
+  if(mysqli_num_rows($query_run) > 0){
+    $record = false;
+    foreach($query_run as $items){
+        $print_data .='<option value="'. $items['id'] .'">';
+        $print_data .= $items['name'];
+        $print_data .='</option>';
+        $record = true;
+    }
+  }
+  return array("record" => $record, 'print_data' => $print_data);
+}
 
 
+function sell($title, $price, $description, $quantity, $type, $userid, $conn){
+  $sell = null;
+  $msg = null;
+  $query = "INSERT INTO users(userid,	title,	price,	description, quantity,	status,	type) VALUES('$userid', '$title', '$price', '$description', '$quantity',  1, $type);";
+      // echo $sqlq;
+      if ($conn->query($sqlq) === TRUE) {//record added
+        $msg = "New user record created successfully<br>Registeration Successfull!..<br>Now you can login in our system";
+        $signup = true;
+      }else{
+        $msg = "No record found...<br>";
+        $signup = false;
+      }
 
+    }
+  }else{
+    $msg = "Database Error";
+    $signup = false;
+
+  }
+  return array("firstname" => $firstname, "lastname" => $lastname, "status" => true, "signup" =>  $signup, "msg" => $msg,"username" => $username, "email" => $email, "phone" => $phone);
+}
 ?>
