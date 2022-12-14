@@ -6,30 +6,33 @@ session_start();
 // 	header("Location: index.php?l=s");
 // }
 
-print_r($_POST);
+// print_r($_POST);
+
 
 if(isset($_POST['login'])){
   logout();
-	$username = $_POST['lusername'];
-	$password = $_POST['lpassword'];
+	$username = $_POST['username'];
+	$password = $_POST['password'];
   // echo $uname." ".$password;
   $user_data = login($username, $password, $conn);
   $_SESSION['user_data'] = $user_data;
   if($_SESSION['user_data']['login']){
-     header("Location: ../index.php?page=account&login_sucess");
+     header("Location: ../index.php?login_sucess");
   }
 
-}elseif(isset($_POST['register'])){
-  // echo "register";
-// ====================Register===============
-	$username = $_POST['rusername'];
-  $email = $_POST['remail'];
+}elseif(isset($_POST['signup'])){
+  // echo "signup";
+// ====================signup===============
+
+  $firstname = $_POST['firstname'];
+  $lastname = $_POST['lastname'];
+	$username = $_POST['username'];
+  $email = $_POST['email'];
   $phone = $_POST['phone'];
-	$password = $_POST['rpassword'];
-  $OTPcode = rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9);
-  $register_data = register($username, $email, $phone, $password,$OTPcode, $conn);
-  print_r($register_data);
-  $_SESSION['register_data'] = $register_data;
+	$password = $_POST['password'];
+  $signup_data = signup($firstname, $lastname, $username, $email, $phone, $password, $conn);
+  print_r($signup_data);
+  $_SESSION['signup_data'] = $signup_data;
   
 }else{
 
