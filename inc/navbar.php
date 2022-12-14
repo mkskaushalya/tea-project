@@ -17,6 +17,9 @@
             <?php
             if(isset($_SESSION['user_data'])){
                 ?>
+            <a href="profile.php">
+                <li><?php echo $_SESSION['user_data']['firstname'] ?></li>
+            </a>
             <a href="inc/action.php?logout">
                 <li>Logout</li>
             </a>

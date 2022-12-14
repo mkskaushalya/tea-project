@@ -7,7 +7,10 @@ if(isset($_SESSION['user_data'])){
 ?>
 
 <section class="login">
-
+<?php  
+// Error bar include
+include "inc/error-bar.php";
+?>
     <form action="inc/action.php" method="post">
         <h2>Login</h2>
         <div class="item">

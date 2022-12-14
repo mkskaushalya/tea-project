@@ -9,12 +9,12 @@ function login($username, $password, $conn) {
           if($user_data['password'] === $password){
             return array("login" => true, "user_id" => $user_data['id'], "firstname" => $user_data['firstname'], "lastname" => $user_data['lastname'], "username" => $user_data['username'], "email" => $user_data['email'], "phone" => $user_data['phone'],"usertype" => $user_data['usertype'], "reg_date" => $user_data['registration'], "last_login" => $user_data['lastlogin'], 'status'=>$user_data['status']);
           }else{
-            header("Location: ../index.php?page=login&error=wc");
+            return array("error" => "Wrong Credentials!");
           }
         }else{
-        header("Location: ../index.php?page=login&error=wc");
+          return array("error" => "Wrong Credentials!");
         }
-      }     
+      }
 }
 
 function logout(){
@@ -23,15 +23,14 @@ function logout(){
       foreach ($_SESSION as $key => $value) {
         unset($_SESSION[$key]);
       }
-      header("location: ../index.php");
+      header('Location: '.$_SERVER['HTTP_REFERER']);
     }else{
-      header("location: ../index.php");
+      header('Location: '.$_SERVER['HTTP_REFERER']);
     }
 }
 
 function signup($firstname, $lastname, $username, $email, $phone, $password, $conn){
   $signup = null;
-  $errormsg = null;
   $msg = null;
   $query = "SELECT * FROM users WHERE (email='$email' OR username='$username' OR phone='$phone')";
 	$result = mysqli_query($conn, $query);
@@ -39,13 +38,13 @@ function signup($firstname, $lastname, $username, $email, $phone, $password, $co
     if($result && mysqli_num_rows($result) > 0)	{//have account
       $user_data = mysqli_fetch_assoc($result);
       if ($user_data['phone'] == $phone) {
-        $errormsg .= "-"."That phone number taken. Try another."."<br>";
+        $msg .= "-"."That phone number taken. Try another."."<br>";
       }
       if ($user_data['email'] == $email) {
-        $errormsg .= "-"."That email address taken. Try another."."<br>";
+        $msg .= "-"."That email address taken. Try another."."<br>";
       }
       if ($user_data['username'] == $username) {
-        $errormsg .= "-"."That username taken. Try another."."<br>";
+        $msg .= "-"."That username taken. Try another."."<br>";
       }
       $signup = false;
     }else{
@@ -54,9 +53,8 @@ function signup($firstname, $lastname, $username, $email, $phone, $password, $co
       if ($conn->query($sqlq) === TRUE) {//record added
         $msg = "New user record created successfully<br>Registeration Successfull!..<br>Now you can login in our system";
         $signup = true;
-
       }else{
-        $errormsg = "No record found...<br>";
+        $msg = "No record found...<br>";
         $signup = false;
       }
 
@@ -66,7 +64,7 @@ function signup($firstname, $lastname, $username, $email, $phone, $password, $co
     $signup = false;
 
   }
-  return array("status" => true, "signup" =>  $signup, "errormsg" => $errormsg, "msg" => $msg,"username" => $username, "email" => $email, "phone" => $phone);
+  return array("firstname" => $firstname, "lastname" => $lastname, "status" => true, "signup" =>  $signup, "msg" => $msg,"username" => $username, "email" => $email, "phone" => $phone);
 }
 
 

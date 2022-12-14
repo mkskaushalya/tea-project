@@ -1,7 +1,7 @@
 <?php
 session_start();
-// include "inc/connect.php";
-// include "inc/functions.php";
+include "inc/connect.php";
+include "inc/functions.php";
 ?>
 
 <!DOCTYPE html>

@@ -4,6 +4,7 @@
 
 section{
     padding: var(--main-padding);
+    row-gap: 1rem;
 }
 body{
     background-color: var(--background-color);
@@ -37,4 +38,15 @@ nav .left{
 nav .right ul li{
     font-weight: 600;
     font-size: 1.5rem;
+}
+
+.errorbar{
+    background-color: #655;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    color:#f99;
+    font-size: 1.5rem;
+    border-radius: 20px;
+
 }
