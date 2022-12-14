@@ -1,21 +1,23 @@
 <?php
 include "inc/head.php";
-
+if(isset($_SESSION['user_data'])){
+	header("Location: index.php?msg=already-logged");
+}
 ?>
 
 <section class="login">
 
-    <form action="inc/action.php">
+    <form action="inc/action.php" method="post">
         <h2>Signup</h2>
         <div class="item">
-            <input type="text" name="firstname" placeholder="First Name">
-            <input type="text" name="lastname" placeholder="Last Name">
-            <input type="email" name="email" placeholder="Email">
-            <input type="tel" name="phone" placeholder="Phone Number">
-            <input type="text" name="username" placeholder="Username">
-            <input type="password" name="password" placeholder="Password">
+            <input type="text" name="firstname" placeholder="First Name" required autocomplete="off">
+            <input type="text" name="lastname" placeholder="Last Name" required autocomplete="off">
+            <input type="email" name="email" placeholder="Email" required autocomplete="off">
+            <input type="tel" name="phone" placeholder="Phone Number" required autocomplete="off">
+            <input type="text" name="username" placeholder="Username" required autocomplete="off">
+            <input type="password" name="password" placeholder="Password" required autocomplete="off">
         </div>
-        <button type="submit">Signup</button>
+        <button type="submit" name="signup">Signup</button>
     </form>
 
 </section>
