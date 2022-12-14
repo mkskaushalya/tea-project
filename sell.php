@@ -1,8 +1,8 @@
 <?php
 include "inc/head.php";
 if(isset($_SESSION['user_data'])){
-	header("Location: index.php?msg=already-logged");
-}
+	
+
 ?>
 
 <section class="login">
@@ -27,10 +27,31 @@ include "inc/error-bar.php";
     </form>
 </section>
 
+<section class="sellitem">
 
+<table>
+<tr>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Price</th>
+    <th>Description</th>
+    <th>Quantity</th>
+    <th>Type</th>
+    <th>Date</th>
+    <th>Time</th>
+    <th>Edit</th>
+    <th>Delete</th>
 
-
+</tr>
 <?php 
+
+echo addItemTable($_SESSION['user_data']['user_id'], $conn);
+
+echo "</table>";
+}
 
 ?>
 
+
+
+</section>
