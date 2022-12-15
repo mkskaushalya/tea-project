@@ -99,15 +99,28 @@ function sell($title, $price, $description, $quantity, $type, $userid, $conn){
   return array("query" => $query, "sell" => $sell, "title" => $title, "price" => $price, "description" =>  $description, "msg" => $msg,"quantity" => $quantity, "type" => $type);
 }
 
+function buy($sellerid, $userid, $productid, $quantity, $conn){
+  $buy = null;
+  $msg = null;
+  $query = "INSERT INTO sell(sellerid, buyerid,	itemid, quantity,	status) VALUES('$sellerid', '$userid', '$productid', '$quantity',  1);";
+  if ($conn->query($query) === TRUE) {//record added
+    $msg = "Order Placed Successfull...";
+    $buy = true;
+  }else{
+    $msg = "Database Error";
+    $buy = false;
+  }
+  return array("query" => $query, "buy" => $buy, 'msg' => $msg);
+}
 
 function Product($type, $conn){  
-  $query = "SELECT * FROM product WHERE type='$type'";
+  $query = "SELECT * FROM product WHERE type='$type' AND status=1";
   $query_run = mysqli_query($conn, $query);
-  $print_data = "";    
+  $print_data = "";
   if(mysqli_num_rows($query_run) > 0){
     $record = false;
     foreach($query_run as $items){
-        $print_data .='<div class="card"><form action="inc/action.php"><h3>'. $items['title'] .'</h3>';
+        $print_data .='<div class="card"><form action="buy.php" method="post"><h3>'. $items['title'] .'</h3>';
         $print_data .='<div class="image">';
         $print_data .='<img src="'. $items['image'] .'" alt="">';
         $print_data .='</div>';
@@ -115,16 +128,19 @@ function Product($type, $conn){
         $print_data .='<span>Rs. '. $items['price'] .'</span>';
         $print_data .='</div>';
         $print_data .='<div class="quantity">';
-        $print_data .='<label for="quantity">Quantity</label>';
-        $print_data .='<input type="number" name="quantity" id="quantity" max="'. $items['quantity'] .'">';
+        $print_data .='<label for="quantity">Quantity : </label>';
+        $print_data .='<input type="number" name="quantity" id="quantity" min="1" value="1" max="'. $items['quantity'] .'" required>';
         $print_data .='</div>';
         $print_data .='<p>Type: '. $items['type'] .'<br>';
-        $print_data .= $items['description'];
+        $print_data .= $items['description'].'</p>';
         $print_data .='<button type="submit" name="buy" value="'. $items['id'] .'">Buy</button>';
         $print_data .='</form>';
         $print_data .='</div>';
         $record = true;
     }
+  }else{
+    $record = false;
+    $print_data = "Items not available.";
   }
   return array("record" => $record, 'print_data' => $print_data);
 }
@@ -163,6 +179,73 @@ function addItemTable($userid, $conn){
     return "<tr><td colspan='10'>No Data.</td></tr>";
 }
 }
+
+function oderTable($userid, $conn){
+  $query = "SELECT * FROM sell WHERE buyerid=$userid AND status=1 ORDER BY date DESC";
+  $query_run = mysqli_query($conn, $query);
+  $tbody = "";
+  if(mysqli_num_rows($query_run) > 0){
+    foreach($query_run as $items){
+      $id = $items['id'];
+      $sellerid = $items['sellerid'];
+      $query2 = "SELECT * FROM users WHERE id='$sellerid' LIMIT 1";
+      $result2 = mysqli_query($conn, $query2);
+      if($result2)	{
+          if($result2 && mysqli_num_rows($result2) > 0)	{
+          $userdata = mysqli_fetch_assoc($result2);
+          $sellername = $userdata['firstname']." ".$userdata['lastname'];
+          }else{
+            $sellername = "Anonymous";
+          }
+      }else{
+        $sellername = "Database Error";
+      }
+
+      $productid = $items['itemid'];
+      $query3 = "SELECT * FROM product WHERE id='$productid' LIMIT 1";
+      $result3 = mysqli_query($conn, $query3);
+      if($result3)	{
+          if($result3 && mysqli_num_rows($result3) > 0)	{
+          $productdata = mysqli_fetch_assoc($result3);
+          $producttitle = $productdata['title'];
+          $type = $productdata['type'];
+          $query4 = "SELECT * FROM producttype WHERE id='$type' LIMIT 1";
+          $result4 = mysqli_query($conn, $query4);
+          if($result4)	{
+            if($result4 && mysqli_num_rows($result4) > 0)	{
+              $userdata = mysqli_fetch_assoc($result4);
+              $productname = $userdata['name'];
+              $image = $userdata['image'];
+            }else{
+              $productname = "No Product Name";
+            }
+          }else{
+            $productname = "Database Error";
+          }
+
+          }else{
+            $producttitle = "No Title";
+          }
+      }else{
+        $sellername = "Database Error";
+      }
+      $quantity = $items['quantity'];
+      $price = $productdata['price'] * $items['quantity'];      
+      $adedtime = strtotime($items['date']);
+      $tbody .= '<tr>';
+      $tbody .= '<td>'.$id.'</td><td>'.$sellername.'</td><td>'.$producttitle.'</td><td>'.$productdata['price'].'</td><td>'.$quantity.'</td><td>'.$price.'</td><td>'.date("Y-m-d", $adedtime).'</td><td>'.date("H:i:s", $adedtime).'</td><td><form action="productedit.php" method="post"><button type="submit" class="edit" value="'.$id.'" name="oderedit">Edit</button></form></td><td><form action="inc/action.php" method="post" onsubmit="return confirm ('."'Are you sure?'".')"><button class="delbutton" type="submit" value="'.$id.'" name="oderdelete">Delete</button></form></td>';
+      $tbody .= '</tr>';
+  
+    }
+  return $tbody;
+
+  }else{
+    return $query;
+}
+}
+
+
+
 
 
 function deleteProduct($productid, $conn){
