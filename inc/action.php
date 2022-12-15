@@ -102,7 +102,15 @@ if(isset($_POST['updateproduct'])){
   }else{
     header('Location: ../sell.php?error');
   }
-  
+}
+if(isset($_POST['placeoder'])){
+  $sellerid = $_POST['sellerid'];
+  $userid = $_SESSION['user_data']['user_id'];
+  $productid = $_POST['placeoder'];
+  $quantity = $_POST['quantity'];
+  $buyresult = buy($sellerid, $userid, $productid, $quantity, $conn);
+  $_SESSION['msg'] = $buyresult['msg'];
+  header('Location: ../order.php');
 }
 
 
