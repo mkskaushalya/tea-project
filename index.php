@@ -14,6 +14,10 @@ include "inc/head.php";
 // Home page include
 include "inc/home.php";
 
+// Product page include
+include "inc/product.php";
+
+
 
 
 
