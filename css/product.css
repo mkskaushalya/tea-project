@@ -1,5 +1,6 @@
 .product{
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-evenly;
 }
@@ -27,7 +28,15 @@
     color:#fff;
     z-index: 0;
 }
-
+.product .card form .quantity input{
+    background-color: transparent;
+    border: 1px solid #ddd;
+    padding: 2px;
+    text-align: center;
+    font-size: 1.3rem;
+    border-radius: 5px;
+    outline: none;
+}
 .product .card form button:hover{
     background-color: #7f7;
     box-shadow: 0 0 5px 0 #fff9;
