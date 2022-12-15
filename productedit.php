@@ -54,5 +54,9 @@ if(isset($_POST['productedit'])){
 
 
 <?php
+}else{
+    $_SESSION['msg'] = "Please Login or Signup";
+    header("Location: ../login.php?error");
 }
+
 ?>
