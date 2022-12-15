@@ -2,6 +2,7 @@
 @import url('home.css');
 @import url('login.css');
 @import url('product.css');
+@import url('buy.css');
 section{
     padding: var(--main-padding);
     row-gap: 1rem;
@@ -41,11 +42,11 @@ nav .right ul li{
 }
 
 .errorbar{
-    background-color: #655;
+    background-color: #665;
     width: 100%;
     text-align: center;
     padding: 5px;
-    color:#f99;
+    color:#ff9;
     font-size: 1.5rem;
     border-radius: 20px;
 
@@ -102,4 +103,8 @@ nav .right ul li{
     background-color: #e44;
     color: #ddd;
     box-shadow: none;
+  }
+
+  h3{
+    text-align: center;
   }
