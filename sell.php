@@ -48,7 +48,11 @@ include "inc/error-bar.php";
 echo addItemTable($_SESSION['user_data']['user_id'], $conn);
 
 echo "</table>";
+}else{
+    $_SESSION['msg'] = "Please Login or Signup";
+    header("Location: ../login.php?error");
 }
+
 
 ?>
 
