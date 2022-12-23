@@ -1,7 +1,7 @@
 <nav>
     <div class="left">
-        <div class="logo">Tea</div>
-        <div class="brand">Management System</div>
+        <div class="logo"><img src="img/logo.png" alt=""></div>
+        <div class="brand">Tea Management System</div>
     </div>
     <div class="right">
         <ul>
