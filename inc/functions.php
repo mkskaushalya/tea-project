@@ -23,9 +23,9 @@ function logout(){
       foreach ($_SESSION as $key => $value) {
         unset($_SESSION[$key]);
       }
-      header('Location: '.$_SERVER['HTTP_REFERER']);
+      header('Location: ../index.php');
     }else{
-      header('Location: '.$_SERVER['HTTP_REFERER']);
+      header('Location: ../index.php');
     }
 }
 
@@ -233,14 +233,14 @@ function oderTable($userid, $conn){
       $price = $productdata['price'] * $items['quantity'];      
       $adedtime = strtotime($items['date']);
       $tbody .= '<tr>';
-      $tbody .= '<td>'.$id.'</td><td>'.$sellername.'</td><td>'.$producttitle.'</td><td>'.$productdata['price'].'</td><td>'.$quantity.'</td><td>'.$price.'</td><td>'.date("Y-m-d", $adedtime).'</td><td>'.date("H:i:s", $adedtime).'</td><td><form action="productedit.php" method="post"><button type="submit" class="edit" value="'.$id.'" name="oderedit">Edit</button></form></td><td><form action="inc/action.php" method="post" onsubmit="return confirm ('."'Are you sure?'".')"><button class="delbutton" type="submit" value="'.$id.'" name="oderdelete">Delete</button></form></td>';
+      $tbody .= '<td>'.$id.'</td><td>'.$sellername.'</td><td>'.$producttitle.'</td><td>'.$productdata['price'].'</td><td>'.$quantity.'</td><td>'.$price.'</td><td>'.date("Y-m-d", $adedtime).'</td><td>'.date("H:i:s", $adedtime).'</td><td><form action="inc/action.php" method="post" onsubmit="return confirm ('."'Are you sure?'".')"><button class="delbutton" type="submit" value="'.$id.'" name="oderdelete">Delete</button></form></td>';
       $tbody .= '</tr>';
   
     }
   return $tbody;
 
   }else{
-    return $query;
+    return "<tr><td colspan='9'>No order data found...</td></tr>";
 }
 }
 
@@ -270,4 +270,21 @@ function updateProduct($productid, $title, $price, $description, $quantity, $typ
       header('Location: '.$_SERVER['HTTP_REFERER']);
   }
 }
+
+
+
+
+
+
+function deleteOrder($oderid, $conn){
+  $sql = "UPDATE sell SET status=0, removed_date=NOW() WHERE id='$oderid' LIMIT 1";
+  if ($conn->query($sql) === TRUE) {
+    return true;
+  }
+  else {
+      return "Error: " . $sql . "<br>" . $conn->error;
+      header('Location: '.$_SERVER['HTTP_REFERER']);
+  }
+}
+
 ?>
