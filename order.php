@@ -19,7 +19,6 @@ include "inc/error-bar.php";
     <th>Total</th>
     <th>Date</th>
     <th>Time</th>
-    <th>Edit</th>
     <th>Delete</th>
 
 </tr>
