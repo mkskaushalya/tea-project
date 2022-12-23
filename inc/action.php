@@ -88,6 +88,11 @@ if(isset($_POST['productdelete'])){
   
 }
 
+
+
+
+
+
 if(isset($_POST['updateproduct'])){
   $productid = $_POST['updateproduct'];
   $title = $_POST['title'];
@@ -113,6 +118,15 @@ if(isset($_POST['placeoder'])){
   header('Location: ../order.php');
 }
 
+
+if(isset($_POST['oderdelete'])){
+  if(deleteOrder($_POST['oderdelete'], $conn)){
+    header('Location: '.$_SERVER['HTTP_REFERER']);
+  }else{
+    header('Location: '.$_SERVER['HTTP_REFERER']);
+  }
+  
+}
 
 
 ?>
